@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="fonts/Comfortaa-Light.ttf" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <title>Веб-программирование | Лабораторная работа №1</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="график" type="график/png" href="photo/график.png">
+
+</head>
+
+<body>
+    <header>
+        <h1>Белова Алина Витальевна</h1>
+        <p>P3222, 3297</p>
+    </header>
+    <main>
+        <form action="script.php" method="get" id="data-form">
+
+            <div id="error-message" class="centered-error" style="display: none;"></div>
+
+            <img class="график" src="photo/график.png" width="400" height="400">
+
+            <label>Изменение X:</label>
+            <div id="x-buttons">
+                <button type="button" name="x" value="-5" id="x_button">-5</button>
+                <button type="button" name="x" value="-4" id="x_button">-4</button>
+                <button type="button" name="x" value="-3" id="x_button">-3</button>
+                <button type="button" name="x" value="-2" id="x_button">-2</button>
+                <button type="button" name="x" value="-1" id="x_button">-1</button>
+                <button type="button" name="x" value="0" id="x_button">0</button>
+                <button type="button" name="x" value="1" id="x_button">1</button>
+            </div>
+
+            <label for="y-input">Изменение Y:</label>
+            <input type="text" id="yInput" name="y" required pattern="^-?\d+([.,]?\d*)?$" placeholder="от -3 до 3">
+
+            <label>Изменение R:</label>
+            <div id="r-checkboxes">
+                <label>
+                    <input type="checkbox" name="r" value="1">1
+                    <input type="checkbox" name="r" value="2">2
+                    <input type="checkbox" name="r" value="3">3
+                    <input type="checkbox" name="r" value="4">4
+                    <input type="checkbox" name="r" value="5">5
+                </label>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

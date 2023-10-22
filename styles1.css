@@ -1,0 +1,53 @@
+/* Подключение шрифта Comfortaa-Light */
+@font-face {
+    font-family: "Comfortaa-Light";
+    src: url('fonts/Comfortaa-Light.ttf');
+}
+
+/* Общие стили для всего документа */
+* {
+    font-family: 'Soyuz Grotesk', sans-serif;
+    font-size: 1.05em;
+}
+
+body {
+    font-family: 'sans-serif', "Comfortaa-Light";
+    /* Изменение шрифта для всего документа */
+    margin: 0;
+    padding: 0;
+    background-color: #ff99cc;
+    /* Фоновый цвет страницы (розовый) */
+}
+
+/* Стили для заголовка в шапке */
+header {
+    background-color: #ff66b2;
+    /* Фоновый цвет заголовка (розовый) */
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    margin: 20px;
+}
+
+/* Ваши стили для столбцов заголовков */
+.col-header {
+    text-align: center;
+    background-color: #f2f2f2;
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+/* Отступы между колонками */
+th.col-header,
+td {
+    border-right: 1px solid #000;
+}
+
+/* Удаляем правую границу у последней ячейки в каждой строке */
+th.col-header:last-child,
+td:last-child {
+    border-right: none;
+}
