@@ -1,28 +1,26 @@
-/* Подключение шрифта Comfortaa-Light */
+/* Подключение шрифта sans-serif */
 @font-face {
-    font-family: "Comfortaa-Light";
-    src: url('fonts/Comfortaa-Light.ttf');
+    font-family: "Sans-serif";
+    src: url('fonts/microsoftsansserif.ttf');
 }
 
 /* Общие стили для всего документа */
 * {
-    font-family: 'Soyuz Grotesk', sans-serif;
+    font-family: 'Sans-serif', sans-serif;
     font-size: 1.05em;
 }
 
 body {
-    font-family: 'sans-serif', "Comfortaa-Light";
-    /* Изменение шрифта для всего документа */
+    /* Свойство в CSS каскадирование */
+    font-family: 'sans-serif', "Sans-serif";
     margin: 0;
     padding: 0;
     background-color: #ff99cc;
-    /* Фоновый цвет страницы (розовый) */
 }
 
 /* Стили для заголовка в шапке */
 header {
     background-color: #ff66b2;
-    /* Фоновый цвет заголовка (розовый) */
     color: white;
     padding: 10px;
     text-align: center;
@@ -32,7 +30,7 @@ main {
     margin: 20px;
 }
 
-/* Ваши стили для столбцов заголовков */
+/* Стили для столбцов заголовков (селектор по классу) */
 .col-header {
     text-align: center;
     background-color: #f2f2f2;
@@ -50,4 +48,9 @@ td {
 th.col-header:last-child,
 td:last-child {
     border-right: none;
+}
+
+/* Стиль для x (селектор по идентификатору) */
+#result-x {
+    color: rgb(104, 18, 33);
 }

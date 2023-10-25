@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles1.css">
+    <title>Результат</title>
+</head>
+
+<body>
+    <header>
+        <h1>Результат</h1>
+    </header>
+    <main>
+        <table id="previous-results">
+            <tr>
+                <th width="16.6%" class="col-header">X</th>
+                <th width="16.6%" class="col-header">Y</th>
+                <th width="16.6%" class="col-header">R</th>
+                <th width="16.6%" class="col-header">Время работы скрипта</th>
+                <th width="16.6%" class="col-header">Текущее время</th>
+                <th width="16.6%" class="col-header">Точка входит в ОДЗ</th>
+            </tr>
+            <tr>
+                <td id="result-x"></td>
+                <td id="result-y"></td>
+                <td id="result-r"></td>
+                <td id="result-time"></td>
+                <td id="result-current-time"></td>
+                <td id="result-point-in-odz"></td>
+            </tr>
+        </table>
+
+    </main>
+    <button onclick="location.href = 'index.html';">Вернуться</button>
+    <script>
+        // Функция для получения сохраненных результатов из localStorage
+        function getSavedResults() {
+            const savedResults = localStorage.getItem('results');
+            return savedResults ? JSON.parse(savedResults) : [];
+        }
+
+        // Функция отображения предыдущих результатов в таблице
+        function displayPreviousResults() {
+            const savedResults = getSavedResults();
+            const previousResultsTable = document.getElementById('previous-results');
+
+            savedResults.forEach((resultData) => {
+                const newRow = previousResultsTable.insertRow();
+                const xCell = newRow.insertCell(0);
+                const yCell = newRow.insertCell(1);
+                const rCell = newRow.insertCell(2);
+                const timeCell = newRow.insertCell(3);
+                const currentTimeCell = newRow.insertCell(4);
+                const pointInODZCell = newRow.insertCell(5);
+
+                xCell.textContent = resultData.x;
+                yCell.textContent = resultData.y;
+                rCell.textContent = resultData.r;
+                timeCell.textContent = resultData.time;
+                currentTimeCell.textContent = new Date().toLocaleString();
+                pointInODZCell.textContent = resultData.result;
+            });
+        }
+
+        // Вызов функции displayPreviousResults при загрузке страницы
+        displayPreviousResults();
+    </script>
+</body>
+
+</html>

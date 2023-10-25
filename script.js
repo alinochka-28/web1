@@ -62,7 +62,6 @@ function handleSubmit(event) {
   const yValue = parseFloat(yInput.value);
   const rValues = Array.from(rCheckboxes).map((checkbox) => checkbox.value);
 
-  //console.log(xValue);
   const requestData = {
     x: xValue,
     y: yValue,
@@ -86,6 +85,44 @@ function handleSubmit(event) {
     });
 }
 
+function getSavedResults() {
+  const savedResults = localStorage.getItem('results');
+  return savedResults ? JSON.parse(savedResults) : [];
+}
+
+function displayPreviousResults(previousResults) {
+  const previousResultsTable = document.getElementById('previous-results');
+
+  // Делаем новую строку
+  const headerRow = previousResultsTable.insertRow(0);
+  const headers = ['X', 'Y', 'R', 'Time', 'Current Time', 'Point in ODZ'];
+
+  headers.forEach((headerText, index) => {
+    const headerCell = document.createElement('th');
+    headerCell.textContent = headerText;
+    headerRow.appendChild(headerCell);
+  });
+
+  previousResults.forEach((result, index) => {
+    const newRow = previousResultsTable.insertRow(index + 1);
+    const xCell = newRow.insertCell(0);
+    const yCell = newRow.insertCell(1);
+    const rCell = newRow.insertCell(2);
+    const timeCell = newRow.insertCell(3);
+    const currentTimeCell = newRow.insertCell(4);
+    const pointInODZCell = newRow.insertCell(5);
+
+    xCell.textContent = result.x;
+    yCell.textContent = result.y;
+    rCell.textContent = result.r;
+    timeCell.textContent = result.time;
+    currentTimeCell.textContent = new Date().toLocaleString();
+    pointInODZCell.textContent = result.result;
+  });
+}
+
+
+
 // Функция для обновления блока с результатами
 function updateResults(x, y, r, requestTime, result) {
   const resultData = {
@@ -96,42 +133,18 @@ function updateResults(x, y, r, requestTime, result) {
     result: JSON.stringify(result.isInArea)
   };
 
-  localStorage.setItem('results', JSON.stringify(resultData));
+  // Получение предыдущих результатов из localStorage
+  const savedResults = getSavedResults() || [];
 
-  const queryString = new URLSearchParams(resultData).toString();
-  const redirectUrl = `index2.html?${queryString}`;
+  // Добавляем новый результат в массив
+  savedResults.push(resultData);
 
-  window.location.href = redirectUrl;
+  // Сохраняем новый массив в localStorage
+  localStorage.setItem('results', JSON.stringify(savedResults));
+
+  // Перкнаправление на  results.html
+  window.location.href = 'results.html';
 }
-
-function getSavedREsults() {
-  const savedResults = localStorage.getItem('results');
-  if (savedResults) {
-    const resultData = JSON.parse(savedResults);
-  }
-}
-
-function displayPreviousResults(previousResults) {
-  const previousResultsTable = document.getElementById('previous-results');
-
-  // Создаем строку для нового результата
-  const newRow = previousResultsTable.insertRow();
-  const xCell = newRow.insertCell(0);
-  const yCell = newRow.insertCell(1);
-  const rCell = newRow.insertCell(2);
-  const timeCell = newRow.insertCell(3);
-  const currentTimeCell = newRow.insertCell(4);
-  const pointInODZCell = newRow.insertCell(5);
-
-  // Заполняем ячейки данными из предыдущего результата
-  xCell.textContent = previousResults.x;
-  yCell.textContent = previousResults.y;
-  rCell.textContent = previousResults.r;
-  timeCell.textContent = previousResults.time;
-  currentTimeCell.textContent = new Date().toLocaleString();
-  pointInODZCell.textContent = previousResults.result;
-}
-
 
 // Добавляем прослушиватели событий на кнопки X
 const xButtons = document.querySelectorAll('button[name="x"]');
