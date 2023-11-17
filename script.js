@@ -62,31 +62,46 @@ function handleSubmit(event) {
   const yValue = parseFloat(yInput.value);
   const rValues = Array.from(rCheckboxes).map((checkbox) => checkbox.value);
 
-  const requestData = {
-    x: xValue,
-    y: yValue,
-    r: rValues,
+  for (let rValue of rValues){
+    const requestData = {
+      x: xValue,
+      y: yValue,
+      r: rValue,
+    };
+  
+    const url = 'script.php?' + new URLSearchParams(requestData);
+  
+    const startTime = performance.now();
+    if (requestData.x, requestData.y, requestData.r){
+      fetch(url)
+        .then((response) => response.json())
+        .then((result) => {
+          const endTime = performance.now();
+          const requestTime = endTime - startTime;
+          console.log(result);
+          let savedResults = getSavedResults() || [];
+
+          let resultData = {
+            x: result.x,
+            y: result.y,
+            r: result.r,
+            timeNow: new Date().toLocaleString(),
+            time: parseFloat(result.extime),
+            result: JSON.stringify(result.isInArea)
+          };
+
+          savedResults.push(resultData);
+          localStorage.setItem('results', JSON.stringify(savedResults));
+        })
+        .catch((error) => {
+          console.error('Ошибка:', error);
+        });
+    }
   };
-
-  const url = 'script.php?' + new URLSearchParams(requestData);
-
-  const startTime = performance.now();
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((result) => {
-      const endTime = performance.now();
-      const requestTime = endTime - startTime;
-      console.log(result);
-      updateResults(xValue, yValue, rValues, requestTime, result);
-    })
-    .catch((error) => {
-      console.error('Ошибка:', error);
-    });
 }
 
 function getSavedResults() {
-  const savedResults = localStorage.getItem('results');
+  let savedResults = localStorage.getItem('results');
   return savedResults ? JSON.parse(savedResults) : [];
 }
 
@@ -124,23 +139,7 @@ function displayPreviousResults(previousResults) {
 
 
 // Функция для обновления блока с результатами
-function updateResults(x, y, r, requestTime, result) {
-  const resultData = {
-    x: x,
-    y: y,
-    r: r.join(','),
-    time: parseFloat(result.extime),
-    result: JSON.stringify(result.isInArea)
-  };
-
-  // Получение предыдущих результатов из localStorage
-  const savedResults = getSavedResults() || [];
-
-  // Добавляем новый результат в массив
-  savedResults.push(resultData);
-
-  // Сохраняем новый массив в localStorage
-  localStorage.setItem('results', JSON.stringify(savedResults));
+function updateResults() {
 
   // Перкнаправление на  results.html
   window.location.href = 'results.html';
@@ -160,4 +159,34 @@ for (const button of xButtons) {
 // Добавляем прослушиватель событий на кнопку отправки формы
 const form = document.getElementById('data-form');
 form.addEventListener('submit', handleSubmit);
+var resultButton = document.querySelector('button[type="result"]');
 
+resultButton.addEventListener('click', updateResults);
+
+function showError(message) {
+  const errorDiv = document.getElementById('error_div');
+  errorDiv.textContent = message;
+  errorDiv.style.display = 'block';
+  setTimeout(function () {
+      errorDiv.style.display = 'none';
+  }, 3000);
+}
+
+
+function validate (x, y, r){
+  if (y>3 || y<-3){
+    showError("ээээ");
+    return false;
+  }
+  return true;
+  if (x>1 || x<-5){
+    showError("ужас");
+    return false;
+  }
+  return true;
+  if (r>5 || r<1){
+    showError("устала");
+    return false;
+  }
+  return true;
+}

@@ -13,7 +13,7 @@
 
 body {
     /* Изменение шрифта для всего документа */
-    /* Свойство CSS каскадирование */
+    /* Свойство CSS каскадирование (возможность накладывать свойства друг на друга, а также расширять свойства в селекторах) */
     font-family: 'sans-serif', "Sans-serif";
     margin: 0;
     padding: 0;
@@ -102,4 +102,29 @@ form h2 {
 /* Стили для элементов с атрибутом "required" (селектор атриббута/псевдокласса) */
 [required] {
     border-color: #E74C3C;
+}
+
+/* Стили для столбцов заголовков (селектор по классу) */
+.col-header {
+    text-align: center;
+    background-color: #f2f2f2;
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+/* Отступы между колонками */
+th.col-header,
+td {
+    border-right: 1px solid #000;
+}
+
+/* Удаляем правую границу у последней ячейки в каждой строке */
+th.col-header:last-child,
+td:last-child {
+    border-right: none;
+}
+
+/* Стиль для x (селектор по идентификатору) */
+#result-x {
+    color: rgb(104, 18, 33);
 }
